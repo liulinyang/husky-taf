@@ -1,0 +1,298 @@
+####################################################################
+# Test ConfigurAtion file, must be changed according to the testware and 
+# test systems. Leave blank if not applicable to a certain test.
+# This is to be modified by users.
+#
+#
+# @Version = 0.1
+# @date = 2008-4-1
+# @Notes:  only for the IMSX7.0 or above version
+#
+#
+####################################################################
+[TAFScriptHeader]
+#0Common = Exporter TAFRemoteCall
+1TAFModules1=TAFGlobalVars TAFErrno TAFLog TAFReport TAFDebug 
+1TAFModules2=TAFData TAFUtils TAFRPC TAFNet TAFCmdClient TAFDBUtils
+#1TAFModules3 = TAFInstallUtils TAFExpect TAFStressUtils TAFStripctl TAFGuiUtils 
+#2IWSSh1 = TmISUX TmHttpUtils TmSMTPUtils TmActUpdate TmISWP TmFTPcmd TmFTPUtils TmIWSS TmIWSSUtils TmIWSSActUpdate TmIWSSDB
+2IMSSd1=IMSSVars IMSS IMSSDB IMSSUtils IMSSSMTPUtils IMSSFTPUtils IMSSPostfix IMSS_SMTP IMSS_POP3 
+#2IMSSd2=IMSS_QM IMSSInstallation  IMSSRuleManagement IMSSScannerAgent IMSSCMAgent IMSSPR
+# Just comment out 'imssDaemonWin32' for now. because we don't need for Linux-like platform
+2IMSSjk=imssLogging imssFilter genericDB imssAU imssSysMon imssReport 
+# For IMSS7 test module
+3IMSSky=IMSS7Common IMSS7Policy IMSS7Daemon IMSS7Debug IMSS7IMSSMGR IMSS7FoxHunter IMSS7FoxHunter IMSS7MTA
+# For IMSX7.5 test module
+5IMSX = IMSX7Common IMSX7Daemon IMSX7Policy IMSX7Mail IMSX7DB IMSX7Staf IMSX7GUI IMSX7LogMgmt
+
+
+
+[TestWareConfiguration]
+HostOS=Windows2000 Server
+TestRootPath=C:\testware
+ResultPath=C:\testware\result
+LogPath=C:\testware\log
+
+# ----------------------------------------------------------
+# Log level support 'info, debug, notice, error, fatal, none' currently
+# ----------------------------------------------------------
+#LogLevel=info
+LogLevel=debug
+
+#ProductName=IMSS7
+ProductName=Polit
+ProductVersion=75
+#ProductInstPkg=c:\builds\imss\60
+
+# for windows
+#ProductRoot=C:\Program Files\Trend Micro\IMSS
+
+# for linux
+ProductRoot=/opt/trend/imss
+
+TAFRuntimeLogPath=C:\testware\log
+#for JK's case only, if on, print more information
+#debug=no
+#define user testing AU server Name, IP is OK.
+#AU_Server=10.2.202.7
+#if restart MSSQL, sometimes sqlservr.exe grows over 500M
+#RestartDB=no
+#exclude CVS folder, that used by cvs client
+ExDirectory=CVS
+ExTestSuites=
+ExTestCases=
+ReportDefStr=imss
+#publish to a web server
+Publish=no
+
+
+#TestSuites=imsx7\policy\normalrouting
+
+#TestSuites=imsx7\policy
+#TestSuites=imsx7\daemon
+
+
+TestSuites=imsx7\test
+TestCases=tt
+#TestCases=Admin-AddUser-0010
+
+#TestSuites=imsx7\EUQ
+
+ #TestCases=EUQ-Sync-0020 
+#TestCases=EUQ-Admin-0010 EUQ-Admin-0020 EUQ-Admin-0030 EUQ-Admin-0040 EUQ-Admin-0050 EUQ-Admin-0070 EUQ-Admin-0090 EUQ-Admin-0100 EUQ-Admin-0110  
+
+
+
+
+
+
+# -------------------------------------------------------------
+# Verbose=<turn on/off the verbose mode for TestLog, 1 to turn on, 0 to turn off
+# -------------------------------------------------------------
+Verbose=1
+#TestDataRoot=/testdev_filesvr/testdata
+TestDataRoot=default
+
+# ----------------------------------------------------------
+#	MUST modify following values for each testing machine
+#
+#	testMachineName	testMachineIP	dstreamSMTP_SvrPort
+#	pop3UsrRcp	remoteCmdPrt	dropFolder
+#	DbName
+# ----------------------------------------------------------
+[TestEnv]
+#GMT Time Zone
+GMTTimeZone=8
+
+#TMCT Setting
+TMCMIPAddr=192.168.11.93
+TMCMPort=80
+
+
+#Use ArGoSoft MailServer as downstream smtp server and pop3 server
+dstreamSMTP_SvrIP=10.204.168.7
+dstreamSMTP_SvrPort=25
+
+# dstreamPOP3_ServerIP is old version of CONST_POP3_SERVER_IP
+dstreamPOP3_ServerIP=10.204.168.7
+dstreamPOP3_ServerPort=110
+
+
+[LDAP]
+LdapSrv=10.2.203.34
+LdapPrt=389;
+BaseDN=1
+UserDN=2
+LdapPw=3
+
+
+[ProductSettings]
+DBType=mssql
+IMSSDBServer=10.204.168.146
+DBUser=sa
+# DBPasswd=sa
+DBPasswd=imss
+DBName=imss
+DBPort=5555
+DBDSN=
+
+#Quarantine area
+DefaultQA=c:\progra~1\TrendM~1\IMSS\queue\quarantine
+
+
+
+#------------------------------------
+#setup system configuration, these systems will
+#be checked by TAF automatically when test starts
+#------------------------------------
+[SystemConfiguration]
+Clients=10.2.202.210
+WebServer=10.2.202.210
+WebServerPort=1812
+Proxy=80
+SMTPServer=10.2.202.210
+SMTPPort=10025
+IMSSServer=10.2.202.210
+IMSSPOP3Port=110
+POP3Server=10.2.203.34
+POP3Port=110
+PUser1=tuser1#10.2.203.34
+PUser2=tuser2#10.2.203.34
+PUser3=
+PInvalidUser1=invaliduser#10.2.203.34
+VHostName=us-blade3
+CMSQLServer=10.2.203.41
+SQLPort=1433
+SQLUser=sa
+SQLPass=
+CMDB=db_ControlManager
+FTPServer=10.2.203.34
+FTPPort=21
+FTPUser=administrator
+FTPPwd=
+FTPRDir=/davshih/Drop
+FTPLDir=C:\Inetpub\mailroot\Drop
+
+
+
+[IMSA7Settings]
+DebugLog = C:\testware\log_imsa7\log_imsa7
+AccessPort = 8445
+LoginUser = admin
+LoginPwd = imss7.0
+SessionFile = C:\testware\session.id
+SumCon_get = C:\testware\tempdata\content
+SumPerPic_get = C:\testware\tempdata\performance
+SumFoxPic_get = C:\testware\tempdata\foxhunter
+ChildIP = 127.0.0.1
+ChildPort = 9999
+
+
+# ----------------------------------------
+# This feature is support by TAF with .tbl definition
+# ----------------------------------------
+[RemoteClients]
+clientA = 192.168.11.206
+clientB = 192.168.11.23
+
+
+# --------------------------------
+# Specify the staf client's IP address
+# --------------------------------
+[StafClient]
+#IPAddress = 192.168.11.43
+#IPAddress = local
+#IPAddress = 10.204.148.82
+IPAddress = 10.204.168.146
+
+
+[Constant]
+
+#############################################################################
+# below are directory related
+#in windows this is different
+CONST_IMSS_HOME=C:\Program Files\Trend Micro\IMSS
+#CONST_IMSS_HOME=/opt/trend/imss
+CONST_POLICY_MODULE=C:\testware\testdata\policy
+
+
+#############################################################################
+# below are environment related
+# CONST_POP3_SERVER is old version of CONST_POP3_SERVER_IP
+CONST_POP3_SERVER=10.204.168.7
+CONST_POP3_SERVER_IP=10.204.168.7
+# CONST_ANOTHER_POP3_SERVER is old version of CONST_POP3_SERVER_2_IP
+CONST_ANOTHER_POP3_SERVER=192.168.11.242
+
+# CONST_IMSXBOX_IP is old version of CONST_IMSS_IP
+CONST_IMSXBOX_IP=10.204.168.123
+CONST_MTA_WAIT=60
+CONST_IMSS_IP=10.204.168.123
+CONST_SUN_LDAP_IP=192.168.11.58
+CONST_DOMINO_LDAP_IP=192.168.11.58
+CONST_IMSS_POSTFIX=/opt/trend/imss/postfix/etc/postfix
+CONST_POSTFIX_HOME=/etc/postfix
+# CONST_POP3_SERVER_2_HOSTNAME is hostname of CONST_POP3_SERVER_2_IP, please make sure IMSS can connect to it.
+CONST_POP3_SERVER_2_HOSTNAME=lab611.imsstest.com
+
+
+#############################################################################
+# below are time related
+CONST_SHOW_LOG_TIME=60
+CONST_NOTIFY_MAIL_TIME=90
+CONST_START_DAEMON_TIME=60
+CONST_POSTPONE_MAIL_TIME=60
+CONST_LARGE_MAIL_HANDLE_TIME=60
+CONST_RELEASE_MAIL_TIME=30
+CONST_UI_REFRESH_TIME=180
+CONST_LDAP_RESTART_TIME=180
+
+#############################################################################
+# below are misc setting
+CONST_WEIRD_VALID_EMAIL_ADDRESS=AaZz09!#$%&'+-/=?^_`{|}~.a@imss-test.com
+CONST_LONG_VALID_EMAIL_ADDRESS=1234567890123456789012345678901234567890123456789012345678901234@1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890.1234567890123456789012345678901234567890123456789012345678901234.1234567890123456789012345
+
+CONST_UI_PASSWORD=autotest
+
+
+#############################################################################
+# below are workaround solution for TAF or Selenium bugs
+CONST_ABC_OR_123_BRACKET=(ABC|123)
+CONST_ABC_OR_123=ABC|123
+CONST_REG_HIGH_OR_LOW=.REG. high|low
+CONST_WEIRD_VALID_LDAP_USER=Aa09<>`~!@#$%^&*()_+|-=\{}[]:";'?,./
+CONST_WEIRD_VALID_LDAP_GROUP=IMSSTEST\g_bob_Aa09<>`~!@#$%^&*()_+|-=\{}[]:";'?,./
+CONST_WEIRD_VALID_EMAIL_ADDRESS_IN_SPAM_SENDER=AaZz09!#$%&'+-/=?^_`{|}~.a@imss-test.com
+CONST_LONG_VALID_LDAP_USER=1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456@imsstest.com
+
+#############################################################################
+# below are for Ricky Qiu's daemon cases:
+# 	got from Ricky
+CONST_MAIL_SERVER_IP=10.204.168.10
+CONST_MAIL_SERVER_SMTP_PORT=25
+
+#	add by bob
+CONST_START_POSTFIX_TIME=60
+CONST_DAEMON_LONG_RCPT_TO=bob@1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890.1234567890123456789012345678901234567890123456789012345678901234.1234567890123456789012345
+
+#############################################################################
+# below are Common definition
+CONST_POP3_SERVER_IP=10.204.168.10
+CONST_POP3_SERVER_2_IP=192.168.11.242
+CONST_IMSS_IP=10.204.168.146
+CONST_FAKEMTA_IP=192.168.21.24
+CONST_LDAP_IP=192.168.34.26
+CONST_LDAP_HOSTNAME=
+
+
+# boul adds it
+CONST_MAIL_SERVER_POP3_PORT=110
+CONST_IMSS_DAEMON_NUM=2
+CONST_SEND_CMD_INI=windows\sendcmd.ini
+
+
+CONST_DNS_SERVER_IP=10.223.22.1
+
+CONST_TTT = CONST_DNS_SERVER_IP
+
+CONST_TEST_DOMAIN=kevintest.com

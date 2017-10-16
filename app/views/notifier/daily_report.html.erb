@@ -1,0 +1,192 @@
+<STYLE TYPE="text/css" MEDIA=screen>
+  <!--
+
+  *
+  {
+    margin: 0em;
+    padding: 0em;
+  }
+
+  h1,h2,h3,h4,h5,h6
+  {
+    color: #6a6a6a;
+  }
+
+  body
+  {
+    /* font-family:palatino,serif, "Trebuchet MS", sans-serif; */
+    font-family:Verdana,Arial,Helvetica,sans-serif;
+    color: #7a7a7a;
+    font-size: 10pt;
+  }
+
+  #content h2,h3,h4,h5,h6
+  {
+    padding-bottom: 0.2em;
+    margin-bottom: 1.2em;
+    border-bottom: dotted 1px #cacaca;
+  }
+
+
+  #content table
+  {
+    border: dotted 1px #cacaca;
+    padding: 0.5em;
+    margin-bottom: 1.5em;
+  }
+
+  #content table tr.failed_step
+  {
+    background-color: #FAEBD7
+  }
+
+  .sortcol {
+    background-position:right center;
+    background-repeat:no-repeat;
+    cursor:pointer;
+    padding-right:20px;
+  }
+
+  .sortasc {
+    background-color:#DDFFAC;
+    background-image:url(up.gif);
+  }
+
+  .sortdesc {
+    background-color:#B9DDFF;
+    background-image:url(down.gif);
+  }
+
+  #content table th
+  {
+    text-align: left;
+    font-weight: bold;
+    padding:0.5em 1.5em 0.5em 0.3em;
+    /* padding: 1em; */
+  }
+
+  #content table td
+  {
+    padding: 0.2em;
+  }
+
+  #content table tr.header
+  {
+    background-color: #e1e1ff;
+    color: inherit;
+  }
+
+  #content table tr.rowA
+  {
+    background-color: #f5f5f5;
+    color: inherit;
+  }
+
+  #content table tr.rowB
+  {
+    background-color: #fdfdfd;
+    color: inherit;
+  }
+
+  tr.rowodd {
+
+  }
+
+  tr.roweven {
+    background-color: #F2F2F2;
+  }
+
+  #content table tr.total
+  {
+    background-color: #e1e1ff;
+    color: inherit;
+  }
+
+  table.highlightable td.highlight { background: red; }
+
+
+
+  -->
+</STYLE>
+
+<body>
+
+  <div id="content">
+    <h3>
+      <%=   @title %>
+    </h3>
+    
+    <table id="table_build_stat" class="highlightable sortable">
+      <thead style="background-color:#DCDCDC">
+        <tr>
+          <th class="sortfirstdec">Module</th>
+          <th>Pass</th>
+          <th>FAIL</th>
+          <th>NT</th>
+          <th>Total</th>
+          <th id="th_duration"class="number">Dur(h)</th>
+          <th id="th_avg_case" class="number">Avg.Case(m)</th>
+          <th id="th_pass_rate"class="number">P-Rate</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <% @summaries.each do |s| %>
+
+          <% next if s[:total] == 0 %>
+
+          <tr class="<%= cycle("rowA", "rowB")%>">
+            <td><%= s[:module]%></td>
+            <td><%= s[:pass]%></td>
+            <td><%= s[:fail]%></td>
+            <td><%= s[:nt]%></td>
+            <td><%= s[:total]%></td>
+
+            <td>
+              <%= "%.1f" % (s[:duration].to_f/3600.to_f) -%>
+            </td>
+            <td>
+              <%= "%.1f" % (s[:duration]/s[:total].to_f/60.to_f) -%>
+            </td>
+            <td>
+              <%= number_to_percentage(s[:pass]/s[:total].to_f * 100, :precision => 1)%>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+      <tfoot>
+        <tr class="total">
+          <td>TOTAL</td>
+          <% total_pass = @summaries.inject(0) {|sum, x| sum = sum + x[:pass]} %>
+          <% total_fail = @summaries.inject(0) {|sum, x| sum = sum + x[:fail]} %>
+          <% total_nt = @summaries.inject(0) {|sum, x| sum = sum + x[:nt]} %>
+          <% total_duration = @summaries.inject(0) {|sum, x| sum = sum + x[:duration]} %>
+          <% total_case = total_pass + total_fail+ total_nt %>
+          <%# total_checked = 0 %>
+
+          <td> <%= total_pass%> </td>
+          <td> <%= total_fail%> </td>
+          <td> <%= total_nt%> </td>
+          <td> <%= total_case %></td>
+          <td> <%= "%.1f" % (total_duration.to_f/3600.to_f) -%> </td>
+          <td> <%= "%.1f" % ((total_duration/total_case).to_f/60.to_f) -%> </td>
+          <td> <%= number_to_percentage(total_pass/total_case.to_f * 100, :precision => 1)%> </td>
+
+        </tr>
+      </tfoot>
+
+    </table>
+
+
+    <p>
+      For details, please check:
+      <%= url_for(:host => "nj-incase:4000", :controller => "dash_board", :action => "trend") %>
+    </p>
+
+
+    Best Regards,<br>
+    Husky
+
+  </div>
+</body>

@@ -1,0 +1,41 @@
+<h5>
+  Specify the details
+</h5>
+
+<% form_for :pfc, :url => {:action=>:save} do |f| %>
+
+<% result = Result.find(params[:id])%>
+
+  <input type="hidden" value="<%= params[:id]-%> " size="30" name="pfc[result_id]" id="pfc_result_id"/><br/>
+
+<p>
+  <%= f.label :defined_id, "Defined_ID: <br/>#{result.defined_id}" %><br/>
+  <%#= f.text_field :defined_id, :value=>"#{result.defined_id}"  %>
+</p>
+<p>
+  <%= f.label :buildno, "Build No: <br/>#{result.testbuild.buildno}" %><br/>
+  <%#= f.label :buildno, :value=>"#{result.build.buildno}"  %>
+</p>
+  <p>
+    <%= f.label :status, "Status" %><br/>
+    <%= f.select :status, %W{in_progress manually_pass manually_fail} %>
+  </p>
+  
+  <p>
+    <%= f.label :reason, "Reason" %><br/>  
+    <%= f.select :reason, %w{product_bug taf_bug case_issue test_env testdata_issue ui_change} %>
+  </p>
+
+  <p>
+    <%= f.label :tracker, "Tracker" %><br/>
+    <%= f.text_field :tracker %>
+  </p>
+
+  <p>
+    <%= f.label :comments, "Comments" %><br/>
+    <%= f.text_area :comments, :rows=>3%>
+  </p>
+
+<%= submit_tag :Save  %>
+
+<% end %>

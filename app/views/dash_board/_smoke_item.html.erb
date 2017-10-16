@@ -1,0 +1,6 @@
+<tr class="<%= cycle('rowA', 'rowB')%>">
+  <td><%= smoke_item[:defined_id]%> </td>
+  <td><%= smoke_item[:final_result].nil? ? "NT" : smoke_item[:final_result].include?('PASS') ? "PASS" : "FAIL" %> </td>
+  <td><%= smoke_item[:owner]%> </td>
+  
+</tr>

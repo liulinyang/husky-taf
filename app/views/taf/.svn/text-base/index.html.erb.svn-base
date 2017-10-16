@@ -1,0 +1,36 @@
+<% content_for :side_bar do %>
+  <h4>TAF Controller Overview</h4>
+
+  <ul>
+    <li>
+      <%= link_to "TAFContollerA" ,:action => "index", :id=>1 %>
+    </li>
+
+  </ul>
+
+
+
+<% end %>
+
+
+<h4>
+  TAF Configuration
+</h4>
+
+<div id="taf_config">
+
+  <%  form_tag :action=>"save" do |form| %>
+    form.lable_tag "Start"
+    form.submit_tag "Save"
+
+  <% end %>
+  
+  [ProductSetting]<br/>
+  TestSuites=IMSx<br/>
+  TestCase=ALl<br/>
+
+
+  <button>
+
+  </button>
+</div>

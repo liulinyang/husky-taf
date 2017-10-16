@@ -1,0 +1,32 @@
+<div>
+  <h5>
+    Add a possible failed case
+  </h5>
+
+  <% remote_form_for :pfc, @pfc,  :url => {:action => 'save'} do |f|%>
+    <p>
+      Defined ID <%= text_field_with_auto_complete :result, :defined_id,{:frequency => 0.1}, {:skip_style => true} %>
+    </p>
+    <p>
+      Module <%= text_field_with_auto_complete :result, :module %>
+    </p>
+    <p>
+      Owner <%= f.text_field :owner %>
+    </p>
+
+    <p>
+      <div><%= f.label(:comments) %></div>
+      <%= f.text_area :comments, :rows=>3 %>
+    </p>
+
+    <%#*<p>%>
+    <%#*Status <%= f.select :status, %w{indeedpass manualpass pass} %>
+    <%#*Reason <%= f.select :reason, %w{productbug TAFbug testdataIssue}, :size => 20%>
+    <%#*</p>%>
+
+    <p>
+      <%=submit_tag 'Add'%>
+    </p>
+  <% end %>
+
+</div>

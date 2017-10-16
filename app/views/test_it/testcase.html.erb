@@ -1,0 +1,57 @@
+
+
+<% content_for(:side_bar) do %>
+  <h4>
+    History Results
+  </h4>
+
+  <div id="buildno_list">
+    <ul>
+      <% for history in @final_history.slice(0,10) do %>
+		<li>
+			<% last_result = history[:history][-1] %>
+			<%= link_to_unless_current "#{history[:buildno]}(#{history[:result]})", :controller=>'test_it', :action=>:testcase, :id=>last_result%>
+		</li>
+          
+        <% end %>
+
+        <li><%=  link_to_remote "More...", :url => {:action=>:more, :id=>last_result},
+            :before => "Element.show('spinner');" ,
+            :html => {:id => 'more_builds'} %></li>
+      </ul>
+    </div>
+
+    <br/>
+
+    
+
+
+
+    <div id="tooltip_area"></div>
+
+
+
+  <% end %>
+
+
+<div id="test_case_details">
+  <% step_count = @step_items.length %>
+    <h4>
+      Test Cases Defined ID: <%= @result[:defined_id] %>: <%= step_count%>
+    </h4>
+
+    <table  class="highlightable sortable" >
+      <tr class="total">
+        <th class="number">Index</th>
+        <th>Step</th>
+        <th class="number">Duration(sec)</th>
+        <th>Result</th>
+        <%#*<th>Comments</th>%>
+        <%#*<th>Action</th>%>
+      </tr>
+      <%= render :partial => 'step_item', :collection =>@step_items%>
+
+    </table>
+
+
+  </div>

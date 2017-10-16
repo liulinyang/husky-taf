@@ -1,0 +1,45 @@
+<% last_result = result_item[:history][-1] %>
+<% result_history = result_item[:history].collect { |x| x.result.slice(0,1)}.join('->') %>
+
+<tr id="<%= dom_id result_item%>" class="<%=cycle("rowA", "rowB")%>">
+  <td id="<%= "#{dom_id(last_result)}_defined_id"%>">
+    <%#=result_item[:defined_id]%>
+    <%= link_to "#{result_item[:defined_id]}", :controller=>'test_it', :action=>:testcase, :id=>last_result%>
+  </td>
+
+  <td>
+    <%= seconds_to_minutes(last_result[:duration]) -%>
+  </td>
+  
+  
+  <td>
+    <%=result_item[:buildno]%>
+  </td>
+  <td id="<%= "#{dom_id(result_item)}_result"%>">
+    <%=result_item[:result]%>(<%=result_history%>)
+  </td>
+  <%#*<td>%>
+    <%#=result_history%>
+  <%#*</td>%>
+  <td>
+    <%#=last_result.submission.runtime%>
+    <%=  time_ago_or_time_stamp(last_result.submission.runtime)%>
+  </td>
+  <td id="<%= "#{dom_id(last_result)}_pfc"%>">
+    <% if result_item[:result] == "PASS" %>
+      <%= '--'  %>
+    <% elsif last_result.pfc%>
+      <%= link_to "#{last_result.pfc.status}", :controller=>:pfc, :action=>:handle, :id=>last_result%>
+
+    <%else%>
+      <%#= last_result.pfc ? "Yes" : 'No' %> <br/>
+      <%#= link_to_remote "Correct", :url=>{:action => :mark_pass, :id=>last_result}  %>
+      <%= link_to "Process", :controller=>:pfc, :action=>:handle, :id=>last_result %>
+    <%end%>
+  </td>
+</tr>
+
+
+
+
+

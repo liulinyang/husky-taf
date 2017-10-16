@@ -1,0 +1,2 @@
+class TafController < ApplicationController
+end

@@ -1,0 +1,148 @@
+<head>
+  <script type="text/javascript" src="/javascripts/swfobject.js"></script>
+</head>
+
+<script>
+
+  function init_all_tooltip() {}
+
+
+  document.observe("dom:loaded", function() {
+    /* initiate all the tooltip */
+    init_all_tooltip();
+
+  });
+
+
+</script>
+
+
+<% content_for(:side_bar) do %>
+
+
+
+  <h4>
+    Lastest 5 of <%= "#{@build_list.length} " %>Builds
+  </h4>
+
+  <div id="buildno_list">
+    <ul>
+      <% for build in @build_list.slice(0,5) do %>
+          <li><%=  link_to_unless_current "#{build.buildno}", :controller=>'dash_board', :action => :index, :build_id=>build.id %></li>
+        <% end %>
+
+        <li><%=  link_to_remote "More...", :url => {:action=>:more},
+            :before => "Element.show('spinner');" ,
+            :html => {:id => 'more_builds'} %></li>
+      </ul>
+    </div>
+
+    <br/>
+
+
+    <h4>
+      <%=  "#{@modules.length}" %> IMSx Auto-Modules
+    </h4>
+
+    <div id="module_list">
+      <ul>
+        <% for mod in @modules.slice(0,5) do %>
+            <li><%=  link_to_unless_current "#{mod}", :action => :index, :module=>"#{mod}" %></li>
+          <% end %>
+
+          <li><%=  link_to_remote "More...", :url => {:action=>:more_modules},
+              :before => "Element.show('spinner');" ,
+              :html => {:id => 'more_modules'} %></li>
+        </ul>
+      </div>
+
+      <br/>
+
+      <h4>
+        Send Notification
+      </h4>
+      <div>
+        <% form_tag :action => 'send_notification' do %>
+          <%= submit_tag "Send" %>
+        <% end %>
+        <br>
+      </div>
+
+
+      <h4>
+        Sync with Server
+      </h4>
+      <div id="sync_form">
+        <% form_remote_tag :url =>{:action => "sync" },
+          :confirm => "Are you sure you want to sync this build?" ,
+          #:before => " Element.show('spinner'); Element.show('sync_spiner');",
+        :before => "Element.hide('sync_form');"+ "Element.show('sync_spinner');" + "Element.show('spinner');",
+          #:complete=> "Element.hide('spinner');
+        :complete => "Element.hide('sync_spinner');" + "Element.hide('spinner');"   do  %>
+          <p>
+            Build No <br/>
+            <%= text_field_tag :buildno, "Specify Buildno"%>
+          </p>
+          <%= submit_tag "Sync" %>
+          <%#=  link_to_remote "SYNC", :url=>{:action=>:sync}  %>
+        <% end %>
+
+      </div>
+      <%= image_tag 'loading2.gif', :id=>'sync_spinner', :style=>"display:none; float:left;"%>
+      <br/>
+      <div color="green" id="sync_result">
+
+      </div>
+
+      <div id="tooltip_area"></div>
+
+
+
+    <% end %>
+
+    <h5>
+      Result Changes in Lastest 3 Builds
+    </h5>
+
+
+    <div id="container">
+      <div>
+        <% @changes.each_pair do |mod, changes| %>
+
+          <% unless changes.length == 0 %>
+            <%  mod_total_number = @build_report_stat[mod][0] + @build_report_stat[mod][1] + @build_report_stat[mod][2] %>
+            <h5>
+              <%= link_to_function("#{mod}(#{changes.length}/#{ mod_total_number})", nil, :id => "more_result_changes") do |page|
+                page.visual_effect :toggle_blind,"#{mod}_resultchange_table"
+              end
+            %>
+            </h5>
+            <table id="<%="#{mod}_resultchange_table"%>" style="display:none">
+              <%= render :partial=>"change_item", :collection=>changes %>
+            </table>
+          <% else %>
+            <h5><%= "#{mod}(#{changes.length}/#{ mod_total_number})" %></h5>
+          <% end %>
+        <% end  %>
+      </div>
+  
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

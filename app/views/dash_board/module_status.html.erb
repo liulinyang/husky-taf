@@ -1,0 +1,185 @@
+<head>
+  <script type="text/javascript" src="/javascripts/swfobject.js"></script>
+</head>
+
+<script>
+
+  function init_all_tooltip() {}
+
+
+  document.observe("dom:loaded", function() {
+    /* initiate all the tooltip */
+    init_all_tooltip();
+
+  });
+
+
+</script>
+
+
+<% content_for(:side_bar) do %>
+
+  <h4>
+    <%=  "#{@modules.length}" %> IMSx Auto-Modules
+  </h4>
+
+  <div id="module_list">
+    <ul>
+      <% for mod in @modules.slice(0,5) do %>
+          <li><%=  link_to_unless_current "#{mod}", module_status_url(:module=>"#{mod}")%></li>
+        <% end %>
+
+        <li><%=  link_to_remote "More...", :url => {:action=>:more_modules},
+            :before => "Element.show('spinner');" ,
+            :html => {:id => 'more_modules'} %></li>
+      </ul>
+    </div>
+
+    <br/>
+
+    <h4>
+      Send Notification
+    </h4>
+    <div>
+      <% form_tag :action => 'send_notification' do %>
+        <%= submit_tag "Send" %>
+      <% end %>
+      <br>
+    </div>
+
+
+    <h4>
+      Sync with Server
+    </h4>
+    <div id="sync_form">
+      <% form_remote_tag :url =>{:action => "sync" },
+        :confirm => "Are you sure you want to sync this build?" ,
+        #:before => " Element.show('spinner'); Element.show('sync_spiner');",
+      :before => "Element.hide('sync_form');"+ "Element.show('sync_spinner');" + "Element.show('spinner');",
+        #:complete=> "Element.hide('spinner');
+      :complete => "Element.hide('sync_spinner');" + "Element.hide('spinner');"   do  %>
+        <p>
+          Build No <br/>
+          <%= text_field_tag :buildno, "Specify Buildno"%>
+        </p>
+        <%= submit_tag "Sync" %>
+        <%#=  link_to_remote "SYNC", :url=>{:action=>:sync}  %>
+      <% end %>
+
+    </div>
+    <%= image_tag 'loading2.gif', :id=>'sync_spinner', :style=>"display:none; float:left;"%>
+    <br/>
+    <div color="green" id="sync_result">
+
+    </div>
+
+    <div id="tooltip_area"></div>
+
+
+
+  <% end %>
+
+  <h5>
+    Status of Module #<%= "#{@current_module}"%>.
+  </h5>
+
+
+  <div id="container">
+    <div id="panel_module" class="panel" style="margin-top: 50px">
+
+      <%#*<h5>        Stat. of Module {<%= "#{@current_module}"       </h5>%>
+      <div id="module_graph">
+        <%= @module_graph%>
+      </div>
+
+      <p>
+        <%=link_to_remote("Show/hide details...", :url => {:action=>:toggle_details, :id=>'module'}, :html => {:id => 'module_details_link'}) %>
+      </p>
+
+
+      <div id="module_details_table" style="display:none">
+        <table class="highlightable sortable">
+          <thead>
+            <tr>
+              <th class="sortfirstdec">BuildNo</th>
+              <th>Pass</th>
+              <th>FAIL</th>
+              <th>NT</th>
+              <th>Total</th>
+              <th id="th_duration"class="number">Dur(h)</th>
+              <th id="th_avg_case" class="number">Avg.C(m)</th>
+              <th id="th_pass_rate"class="number">P-Rate</th>
+              <th>Checked</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <% @module_report_stat.each_pair do |buildno, stat| %>
+              <%#*<tr class="<%= cycle("rowA", "rowB") -%>
+              <% build = Build.find(:first,:conditions=>["buildno = ? and product_id = ?", buildno, 2]) %>
+              <tr>
+                <td id="<%=  "td_#{buildno}"%> "><%= link_to buildno.to_s, :controller => :test_it, :action=>:query, 'result[build_id]'=>"#{build.id}", 'result[module]'=>"#{@current_module}" %></td>
+
+                <% stat.slice(0,3).each_with_index do |c, index| %>
+                  <td id="<%="#{buildno}_#{index == 0 ? 'PASS' : index == 1 ? 'FAIL' : "NT"}" %> "><%= c.to_s %></td>
+                <% end %>
+
+                <% sum = stat.slice(0,3).inject(0) {|sum, x|sum = sum+x} %>
+                <% pass_rate = stat[0]/sum.to_f * 100%>
+
+                <td>
+                  <%= sum -%>
+                </td>
+
+                <td>
+                  <%= seconds_to_hours(stat[-1]) -%>
+                </td>
+
+                <td>
+                  <%= seconds_to_minutes(sum == 0 ? 0:stat[-1]/sum) -%>
+                </td>
+
+                <td>
+                  <%= number_to_percentage(pass_rate, :precision => 0)%>
+                </td>
+
+                <td>0</td>
+              </tr>
+            <% end %>
+          </tbody>
+          <tfoot>
+            <tr class="total">
+              <td>TOTAL</td>
+              <% total_pass = @module_report_stat.values.inject(0) {|sum, x| sum = sum + x[0]} %>
+              <% total_fail = @module_report_stat.values.inject(0) {|sum, x| sum = sum + x[1]} %>
+              <% total_nt = @module_report_stat.values.inject(0) {|sum, x| sum = sum + x[2]} %>
+              <% total_duration = @build_report_stat.values.inject(0) {|sum, x| sum = sum + x[3]} %>
+              <% total_case = total_pass + total_fail+ total_nt %>
+              <% total_checked = 0 %>
+
+              <td> <%= total_pass%> </td>
+              <td> <%= total_fail%> </td>
+              <td> <%= total_nt%> </td>
+              <td> <%= total_case %></td>
+              <td> <%= seconds_to_hours(total_duration) -%> </td>
+              <td> <%= seconds_to_minutes(total_duration/total_case) -%> </td>
+              <td> <%= number_to_percentage(total_pass/total_case.to_f * 100, :precision => 0)%> </td>
+              <td> <%= total_checked%> </td>
+            </tr>
+          </tfoot>
+
+        </table>
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+
+
+
+

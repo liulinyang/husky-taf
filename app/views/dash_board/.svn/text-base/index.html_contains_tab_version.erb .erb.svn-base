@@ -1,0 +1,562 @@
+<head>
+  <script type="text/javascript" src="/javascripts/swfobject.js"></script>
+</head>
+
+<script>
+
+  function init_all_tooltip() {}
+
+
+  document.observe("dom:loaded", function() {
+    /* initiate all the tooltip */
+    init_all_tooltip();
+
+  });
+
+
+</script>
+
+
+<% content_for(:side_bar) do %>
+
+
+
+  <h4>
+    Lastest 5 of <%= "#{@build_list.length} " %>Builds
+  </h4>
+
+  <div id="buildno_list">
+    <ul>
+      <% for build in @build_list.slice(0,5) do %>          
+          <li><%=  link_to_unless_current "#{build.buildno}", showbuild_url(:build_id => build.id, :only_path => true) %></li>
+        <% end %>
+
+        <li><%=  link_to_remote "More...", :url => {:action=>:more},
+            :before => "Element.show('spinner');" ,
+            :html => {:id => 'more_builds'} %></li>
+      </ul>
+    </div>
+
+    <br/>
+
+
+    <h4>
+      <%=  "#{@modules.length}" %> IMSx Auto-Modules
+    </h4>
+
+    <div id="module_list">
+      <ul>
+        <% for mod in @modules.slice(0,5) do %>
+            <li><%=  link_to_unless_current "#{mod}", showmodule_url(:module => mod, :only_path => true) %></li>
+          <% end %>
+
+          <li><%=  link_to_remote "More...", :url => {:action=>:more_modules},
+              :before => "Element.show('spinner');" ,
+              :html => {:id => 'more_modules'} %></li>
+        </ul>
+      </div>
+
+      <%#*<h4>%>
+      <%#= link_to_unless_current "Possible Failed Case List", :controller => :pfc, :action=> :index %>
+      <%#=  link_to_remote "False Alert Test Case List...", :url => {:action=>:pfc}, :before => "Element.show('spinner');" ,
+      :html => {:id => 'pfc_list'} %>
+      <%#*</h4>%>
+
+      <%#*<h4>%>
+      <%#= link_to "Add a Fail Test Case", :controller => :pfc, :action=>:new %>
+      <%#*</h4>%>
+
+      <br/>
+
+      <h4>
+        Send Notification
+      </h4>
+      <div>
+        <% form_tag :action => 'send_notification' do %>
+          <%= submit_tag "Send" %>
+        <% end %>
+        <br>
+      </div>
+
+
+      <h4>
+        Sync with Server
+      </h4>
+      <div id="sync_form">
+        <% form_remote_tag :url =>{:action => "sync" },
+          :confirm => "Are you sure you want to sync this build?" ,
+          #:before => " Element.show('spinner'); Element.show('sync_spiner');",
+        :before => "Element.hide('sync_form');"+ "Element.show('sync_spinner');" + "Element.show('spinner');",
+          #:complete=> "Element.hide('spinner');
+        :complete => "Element.hide('sync_spinner');" + "Element.hide('spinner');"   do  %>
+          <p>
+            Build No <br/>
+            <%= text_field_tag :buildno, "Specify Buildno"%>
+          </p>
+          <%= submit_tag "Sync" %>
+          <%#=  link_to_remote "SYNC", :url=>{:action=>:sync}  %>
+        <% end %>
+
+      </div>
+      <%= image_tag 'loading2.gif', :id=>'sync_spinner', :style=>"display:none; float:left;"%>
+      <br/>
+      <div color="green" id="sync_result">
+
+      </div>
+
+      <div id="tooltip_area"></div>
+
+
+
+    <% end %>
+
+    <h5>
+      Automation Status of Build #<%= "#{@current_buildno}"%>.
+    </h5>
+
+
+    <div id="container">
+
+
+
+      <ul id="dashboard_tabs" class="subsection_tabs">
+        <%#*<ul id="tabnav" class="subsection_tabs">%>
+        <li id="tab_build" class="tab"><a href="#panel_build">Overall</a></li>
+        <li id="tab_smoke_test" class="tab"><a href="#panel_smoke_test">Smoke</a></li>
+        <li id="tab_build_pie" class="tab"><a href="#panel_build_pie">Case_Distribution</a></li>
+        <li id="tab_module" class="tab"><a href="#panel_module">Module{<%= "#{@current_module}"%>}</a></li>
+        <li id="tab_result_change" class="tab"><a href="#panel_result_change">Change</a></li>
+        <li id="tab_build_trend" class="tab"><a href="#panel_build_trend">Trend</a></li>
+        <%#*<li id="tab_run_progress" class="tab"><a href="#panel_run_progress">Progress</a></li>%>
+
+
+      </ul>
+
+      <div id="panel_build" style="margin-top:50px">
+        <%#*<h5>        Stat. of Build #<%= @current_buildno       </h5>%>
+
+        <table>
+          <tr>
+            <th>Total</th>
+            <th>Pass</th>
+            <th>Fail</th>
+            <th>Nt</th>
+            <th>P-Rate</th>
+          </tr>
+          <tr class="total">
+
+            <% total_pass = @build_report_stat.values.inject(0) {|sum, x| sum = sum + x[0]} %>
+            <% total_fail = @build_report_stat.values.inject(0) {|sum, x| sum = sum + x[1]} %>
+            <% total_nt = @build_report_stat.values.inject(0) {|sum, x| sum = sum + x[2]} %>
+            <% total_case = total_pass + total_fail+ total_nt %>
+
+            <td> <%= total_case %></td>
+            <td> <%= total_pass%> </td>
+            <td> <%= total_fail%> </td>
+            <td> <%= total_nt%> </td>
+            <td> <%= number_to_percentage(total_pass/total_case.to_f * 100, :precision => 0)%> </td>
+          </tr>
+
+        </table>
+
+
+        <div id="build_graph">
+          <%= @build_graph%>
+        </div>
+
+
+        <br/>
+
+        <div>
+          <h5>
+            Comments
+            <%= link_to_function("more/less", nil, :id => "more_link") do |page|
+              page.visual_effect :toggle_blind,'build_comments_list'
+            end
+          %>
+          </h5>
+          <div id="build_comments_list" style="display:none">
+            <%= render :partial=>"comment_item", :collection=>@comment_list %>
+            <% form_for :comment, :url=>{:action=>"save_comment", :id=>@comment} do |f|%>
+              <%= f.text_area "content", :rows=>3 %>
+              <%= f.hidden_field "buildno"%>
+              <%= f.hidden_field "build_id"%>
+              <%= f.hidden_field "user"%>
+              <p><%= submit_tag "Add" %></p>
+            <% end %>
+          </div>
+        </div>
+
+        <p>
+          <%=link_to_remote("Show/hide details...", :url => {:action=>:toggle_details, :id=>"build"}, :html => {:id => 'build_details_link'}) %>
+        </p>
+
+
+        <div id="build_details_table" style="display:none">
+          <table id="table_build_stat" class="highlightable sortable">
+            <thead>
+              <tr>
+                <th class="sortfirstdec">Module</th>
+                <th>Total</th>
+                <th>Pass</th>
+                <th>FAIL</th>
+                <th>NT</th>
+                <th id="th_duration"class="number">Dur(h)</th>
+                <th id="th_avg_case" class="number">Avg.C(m)</th>
+                <th id="th_pass_rate"class="number">P-Rate</th>
+                <th>Checked</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <% @build_report_stat.each_pair do |mod, stat| %>
+                <%#*<tr class="<%= cycle("rowA", "rowB") -%>
+                <tr>
+                  <td id="<%=  "td_#{mod}"%> "><%= link_to mod.to_s, :controller => :test_it, :action=>:query, 'result[build_id]'=>@current_build_id, 'result[module]'=>"#{mod}" %></td>
+
+                  <% sum = stat.slice(0,3).inject(0) {|sum, x|sum = sum+x} %>
+                  <% pass_rate = stat[0]/sum.to_f * 100%>
+
+                  <td>
+                    <%= sum -%>
+                  </td>
+
+                  <% stat.slice(0,3).each_with_index do |c, index| %>
+                    <td id="<%="#{mod}_#{index == 0 ? 'PASS' : index == 1 ? 'FAIL' :  "NT" }" %> "><%= c.to_s %></td>
+                  <% end %>
+
+
+
+                  <td>
+                    <%= seconds_to_hours(stat[-1]) -%>
+                  </td>
+
+                  <td>
+                    <%= seconds_to_minutes(stat[-1]/sum) -%>
+                  </td>
+
+
+                  <td>
+                    <%= number_to_percentage(pass_rate, :precision => 0)%>
+                  </td>
+
+                  <td>
+                    0
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr class="total">
+                <td>TOTAL</td>
+                <% total_pass = @build_report_stat.values.inject(0) {|sum, x| sum = sum + x[0]} %>
+                <% total_fail = @build_report_stat.values.inject(0) {|sum, x| sum = sum + x[1]} %>
+                <% total_nt = @build_report_stat.values.inject(0) {|sum, x| sum = sum + x[2]} %>
+                <% total_duration = @build_report_stat.values.inject(0) {|sum, x| sum = sum + x[3]} %>
+                <% total_case = total_pass + total_fail+ total_nt %>
+                <% total_checked = 0 %>
+
+                <td> <%= total_case %></td>
+                <td> <%= total_pass%> </td>
+                <td> <%= total_fail%> </td>
+                <td> <%= total_nt%> </td>
+                <td> <%= total_duration == 0 ? 0 : seconds_to_hours(total_duration) -%> </td>
+                <td> <%= total_case == 0 ? 0 : seconds_to_minutes(total_duration/total_case) -%> </td>
+                <td> <%= total_case == 0? 0 : number_to_percentage(total_pass/total_case.to_f * 100, :precision => 0)%> </td>
+                <td> <%= total_checked%> </td>
+              </tr>
+            </tfoot>
+
+          </table>
+        </div>
+      </div>
+
+      <div id="panel_build_pie" class="panel" style="margin-top:50px">
+
+        <div>
+          <%= @build_pie_graph%>
+        </div>
+      </div>
+
+
+      <div id="panel_module" class="panel" style="margin-top: 50px">
+
+        <%#*<h5>        Stat. of Module {<%= "#{@current_module}"       </h5>%>
+        <div id="module_graph">
+          <%= @module_graph%>
+        </div>
+
+        <p>
+          <%=link_to_remote("Show/hide details...", :url => {:action=>:toggle_details, :id=>'module'}, :html => {:id => 'module_details_link'}) %>
+        </p>
+
+
+        <div id="module_details_table" style="display:none">
+          <table class="highlightable sortable">
+            <thead>
+              <tr>
+                <th class="sortfirstdec">BuildNo</th>
+                <th>Pass</th>
+                <th>FAIL</th>
+                <th>NT</th>
+                <th>Total</th>
+                <th id="th_duration"class="number">Dur(h)</th>
+                <th id="th_avg_case" class="number">Avg.C(m)</th>
+                <th id="th_pass_rate"class="number">P-Rate</th>
+                <th>Checked</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <% @module_report_stat.each_pair do |buildno, stat| %>
+                <%#*<tr class="<%= cycle("rowA", "rowB") -%>
+                <% build = Build.find(:first,:conditions=>["buildno = ? and product_id = ?", buildno, 2]) %>
+                <tr>
+                  <td id="<%=  "td_#{buildno}"%> "><%= link_to buildno.to_s, :controller => :test_it, :action=>:query, 'result[build_id]'=>"#{build.id}", 'result[module]'=>"#{@current_module}" %></td>
+
+                  <% stat.slice(0,3).each_with_index do |c, index| %>
+                    <td id="<%="#{buildno}_#{index == 0 ? 'PASS' : index == 1 ? 'FAIL' : "NT"}" %> "><%= c.to_s %></td>
+                  <% end %>
+
+                  <% sum = stat.slice(0,3).inject(0) {|sum, x|sum = sum+x} %>
+                  <% pass_rate = stat[0]/sum.to_f * 100%>
+
+                  <td>
+                    <%= sum -%>
+                  </td>
+
+                  <td>
+                    <%= seconds_to_hours(stat[-1]) -%>
+                  </td>
+
+                  <td>
+                    <%= seconds_to_minutes(sum == 0 ? 0:stat[-1]/sum) -%>
+                  </td>
+
+                  <td>
+                    <%= number_to_percentage(pass_rate, :precision => 0)%>
+                  </td>
+
+                  <td>0</td>
+                </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+              <tr class="total">
+                <td>TOTAL</td>
+                <% total_pass = @module_report_stat.values.inject(0) {|sum, x| sum = sum + x[0]} %>
+                <% total_fail = @module_report_stat.values.inject(0) {|sum, x| sum = sum + x[1]} %>
+                <% total_nt = @module_report_stat.values.inject(0) {|sum, x| sum = sum + x[2]} %>
+                <% total_duration = @build_report_stat.values.inject(0) {|sum, x| sum = sum + x[3]} %>
+                <% total_case = total_pass + total_fail+ total_nt %>
+                <% total_checked = 0 %>
+
+                <td> <%= total_pass%> </td>
+                <td> <%= total_fail%> </td>
+                <td> <%= total_nt%> </td>
+                <td> <%= total_case %></td>
+                <td> <%= seconds_to_hours(total_duration) -%> </td>
+                <td> <%= seconds_to_minutes(total_duration/total_case) -%> </td>
+                <td> <%= number_to_percentage(total_pass/total_case.to_f * 100, :precision => 0)%> </td>
+                <td> <%= total_checked%> </td>
+              </tr>
+            </tfoot>
+
+          </table>
+        </div>
+
+
+      </div>
+
+      <div id="panel_result_change" class="panel" style="margin-top:50px">
+
+        <div>
+          <p>Result Changes in Last 3 Builds</p>
+
+          <% @changes.each_pair do |mod, changes| %>
+
+            <% unless changes.length == 0 %>
+              <%  mod_total_number = @build_report_stat[mod][0] + @build_report_stat[mod][1] + @build_report_stat[mod][2] %>
+              <h5>
+                <%= link_to_function("#{mod}(#{changes.length}/#{ mod_total_number})", nil, :id => "more_result_changes") do |page|
+                  page.visual_effect :toggle_blind,"#{mod}_resultchange_table"
+                end
+              %>
+              </h5>
+              <table id="<%="#{mod}_resultchange_table"%>" style="display:none">
+                <%= render :partial=>"change_item", :collection=>changes %>
+              </table>
+            <% else %>
+              <h5><%= "#{mod}(#{changes.length}/#{ mod_total_number})" %></h5>
+            <% end %>
+
+          <% end  %>
+
+        </div>
+      </div>
+
+
+      <div id="panel_smoke_test" class="panel" style="margin-top: 50px">
+
+        <div id="smoke_summary">
+          <% s_total = @smoke_test_result.length %>
+          <% s_pass =@smoke_test_result.select{|s| not s[:final_result].nil? and s[:final_result].include?('PASS')}.length %>
+          <table>
+            <tr>
+              <th>Total</th>
+              <th>Pass</th>
+              <th>Fail</th>
+              <th>NT</th>
+              <th>P-Ratio</th>
+            </tr>
+            <tr class="total">
+              <td>
+                <%= @smoke_test_result.length %>
+              </td>
+
+              <td>
+                <%= @smoke_test_result.select{|s|not s[:final_result].nil? and  s[:final_result].include?('PASS')}.length  %>
+              </td>
+
+              <td>
+                <%= @smoke_test_result.select{|s|not s[:final_result].nil? and not s[:final_result].include?("PASS") }.length  %>
+              </td>
+
+              <td>
+                <%= @smoke_test_result.select{|s| s[:final_result].nil?}.length  %>
+              </td>
+
+              <td>
+                <%= number_to_percentage(s_pass/s_total.to_f * 100, :precision => 0)%>
+              </td>
+
+            </tr>
+          </table>
+        </div>
+
+
+        <div id="panel_smoke_test">
+          <table class="highlightable sortable">
+            <thead>
+              <tr>
+                <th>Defined_ID</th>
+                <th>Result</th>
+                <th>Owner</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <%= render :partial=>"smoke_item", :collection=>@smoke_test_result %>
+            </tbody>
+
+
+          </table>
+
+        </div>
+      </div>
+
+      <%#*<div id="panel_run_progress">%>
+
+      <%#*<table class="highlightable sortable">%>
+      <%#*<thead>%>
+      <%#*<tr>%>
+      <%#*<th>Module</th>%>
+      <%#*<th>Done</th>%>
+      <%#*<th>Machine</th>%>
+      <%#*</tr>%>
+      <%#*</thead>%>
+
+      <%#*<tbody>%>
+      <%#= render :partial=>"progress_item", :collection=>@running_status %>
+      <%#*</tbody>%>
+
+
+      <%#*</table>%>
+
+      <%#*</div>%>
+    </div>
+
+
+    <%#*<ul id="tabs_example_one" class="subsection_tabs">%>
+    <%#*<li class="tab"><a href="#one">One</a></li>%>
+    <%#*<li class="tab"><a href="#two">Two</a></li>%>
+    <%#*</ul>%>
+    <%#*<div id="one"><p>This is the simplest example of a set of tabs.</p></div>%>
+    <%#*<div id="two"><p>Note that the styling for the tabs is done with CSS, not the Control.Tabs script.</p></div>%>
+
+    <script>
+
+      function local_init_tooltip(){
+        new Tip($('th_avg_case'),new Element('div').update('average running time per test case of module'),
+        {
+          //title: "Notes",
+          //target: $('tooltip_area'),
+          fixed: false
+        }
+      );
+
+        new Tip($('th_pass_rate'),new Element('div').update('pass ratio of each module'),
+        {
+          //title: "Notes",
+          //target: $('tooltip_area'),
+          fixed: false
+        }
+      );
+
+        new Tip($('th_duration'),new Element('div').update('total running time for each module'),
+        {
+          //title: "Notes",
+          //target: $('tooltip_area'),
+          fixed: false
+        }
+      );
+
+    <%#*new Tip($('table_build_stat'),new Element('div').update('click table header to sort the column'),%>
+    <%#*{%>
+    <%#*//title: "Notes",%>
+    <%#*target: $('tooltip_area'),%>
+    <%#*fixed: true%>
+    <%#*}%>
+    <%#*);%>
+
+      };
+
+      // when document loads
+      document.observe( 'dom:loaded', function() {
+
+        //set buildno onfoucs event
+        $('buildno').observe('focus', function(event) {
+          event.element().select();
+        });
+
+    <%#*new Control.Tabs('tabs_example_one');%>
+        new Control.Tabs('dashboard_tabs',{
+          hover: true
+        });
+
+        local_init_tooltip();
+    <%#*new Accordian('basic-accordian',5,'header_highlight');%>
+
+    <%#*var tabs = new tabset('container'); // name of div to crawl for tabs and panels%>
+    <%#*tabs.autoActivate($('module_tab')); // name of tab to auto-select if none exists in the url%>
+
+      } )
+
+    <%#*set active panle%>
+    <%#*Control.Tabs.findByTabId('panel_build').setActiveTab('panel_module');%>
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+

@@ -1,0 +1,82 @@
+<%= javascript_include_tag "in_place_select_editor" %>
+
+<% content_for :side_bar do  %>
+  <h4>
+    Purpose
+  </h4>
+  <p>
+    All the failed test cases are listed here, including how it's been handled finally.
+    <p>Given these data, we could tracing these failures and analyse them to figure out which cases needs
+    improvements and how. </p>
+  </p>
+
+  <h4>Top-20 Time-killer Keywords</h4>
+  <p id="top_keyword_list">
+    <%= link_to "Top-20", :controller=>'analysis', :action=>'analysis'%>
+  </p>
+
+  <h4>Failed Test Case distribution.</h4>
+  <p id="faled_case_history">
+    <%= link_to "Distribution", :controller=>'analysis', :action=>'build_diff'%>
+  </p>
+
+  <br/>
+
+<%end%>
+
+<div id="Summary">
+  <h4>
+    Summary
+  </h4>
+  <p>
+    Total handle Fail Case : <span id="pfc_total_span"><%= @pfcs.length %></span>
+  </p>
+</div>
+
+
+<% if flash[:error] %>
+  <div id="notification">
+    <h5 class="error">Error Message:<br/>
+      <span class="error">
+        <%= "#{flash[:error]}" %>
+      </span>
+    </h5>
+
+  </div>
+<% end %>
+
+<% if flash[:info] %>
+  <div id="notification">
+    <h5 class="error">Info Message:<br/>
+      <span class="error">
+        <%= "#{flash[:info]}" %>
+      </span>
+    </h5>
+
+  </div>
+<% end %>
+
+
+<% if @pfcs.length > 0 %>
+  <h4>
+    Possible Failed Test Case List
+  </h4>
+
+
+  <div id="pfc_list">
+    <table class="highlightable sortable">
+      <tr class="header" id="pfc_list_header">
+        <th>Defined_ID</th>
+        <th>buildno</th>
+        <th>Status</th>
+        <th>Reason</th>
+        <th>Tracker</th>
+        <th>Owner</th>
+        <th>Comments</th>
+        <th>Check</th>
+      </tr>
+
+      <%= render :partial => "pfc_item", :collection => @pfcs %>
+    </table>
+  </div>
+<% end %>

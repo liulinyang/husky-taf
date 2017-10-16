@@ -1,0 +1,14 @@
+<tr class="<%= "failed_step" if step_item[:result] == 0%> <%=cycle("rowA", "rowB")%>">
+  <td>
+    <%=step_item[:step_index]%>
+  </td>
+  <td>
+    <%=step_item[:kmodule]%>::<%=step_item[:keyword]%><br>&nbsp;(<%=step_item[:param].gsub(',', ', ')%>)
+  </td>
+  <td>
+    <%=step_item[:duration]%>
+  </td>
+  <td>
+    <%=step_item[:result] == 1 ? "PASS" : "FAIL" %>
+  </td>
+</tr>

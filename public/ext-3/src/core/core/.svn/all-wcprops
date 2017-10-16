@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core
+END
+Element.style.js
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Element.style.js
+END
+Element.js
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Element.js
+END
+CompositeElementLite.js
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/CompositeElementLite.js
+END
+Template.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Template.js
+END
+Element.traversal.js
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Element.traversal.js
+END
+EventManager.js
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/EventManager.js
+END
+Element.position.js
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Element.position.js
+END
+Fx.js
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Fx.js
+END
+DomHelper.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/DomHelper.js
+END
+Ext.js
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Ext.js
+END
+Element.insertion.js
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Element.insertion.js
+END
+Element.fx.js
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Element.fx.js
+END
+DomQuery.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/DomQuery.js
+END
+Element.scroll.js
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/2/trunk/public/ext-3/src/core/core/Element.scroll.js
+END

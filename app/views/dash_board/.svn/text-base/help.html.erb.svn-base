@@ -1,0 +1,84 @@
+<% content_for(:side_bar) do   %>
+
+  <ul>
+    <li>
+      <%= link_to "Change Log",  :controller=>"dash_board", :action=>:help%>
+    </li>
+    <li>
+      <%= link_to "Help",  :controller=>"dash_board", :action=>:help%>
+    </li>
+    <li>
+      <%= link_to "ToDo List",  :controller=>"dash_board", :action=>:todo%>
+    </li>
+  </ul>
+<% end %>
+
+
+
+
+
+<h4 id="changelog">
+  Change Log
+</h4>
+
+
+<p>
+  <ul>1/12/2009
+    <li>
+      Extend "build" concept, so it could support "product_version_platform_buildno"
+    </li>
+    <li>
+      "Build" has types: "daily", "manual"
+    </li>
+    <li>
+      User could add comments on test result of each daily build
+    </li>
+
+
+
+  </ul>
+  <ul>12/26/2008
+    <li>
+      Complete Rake task for download and parsing test reports from <a href="ftp://cn-labfs/home/imss/TOIReport">TOIReport</a>
+    </li>
+    <li>
+      Dashboard display details report of lastest build
+    </li>
+    <li>
+      List all builds avaliable in database in side bar of "dashboard"
+    </li>
+
+
+  </ul>
+
+
+
+
+
+  <ul>12/12/2008
+    <li>
+      Initial commit ready.
+    </li>
+    <li>Visualize the test result data</li>
+    <li>submit test result file</li>
+  </ul>
+
+</p>
+
+<div id="tooltip_area">
+  Here is tooltip area
+</div>
+
+<script>
+  function local_init_tooltip(){
+    new Tip($('changelog'),new Element('div').update('my text'),
+    {
+      title: "hoh",
+      target: $('tooltip_area'),
+      fixed: true
+    }
+  );
+  };
+
+  local_init_tooltip();
+</script>

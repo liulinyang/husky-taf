@@ -1,0 +1,131 @@
+<% content_for :side_bar do  %>
+  <h4>
+    To-do list
+  </h4>
+
+  <ul>
+    <li>
+      Query test result details
+    </li>
+    <li>
+      Query failure test case history and process details
+    </li>
+  </ul>
+
+<% end %>
+
+
+
+
+<% if params[:result].blank? %>
+
+  <div id="query">
+    <h5>
+      Specify the query condition (<span style="color:green; font-size: 8pt" >autocomplete supported</span>)
+    </h5>
+
+    <% form_tag({:action => 'query'},{:method=> 'get'}) do %>
+      <div>
+        <p>
+          Build No<br/>
+          <%= text_field_with_auto_complete :result, :buildno,{:frequency => 0.1}, {:skip_style => true} %>
+        </p>
+        <p>
+          Module<br/>
+          <%= text_field_with_auto_complete :result, :module %>
+        </p>
+
+      </div>
+      <div class="'option">
+        <%=label_tag "With Result "%>
+        <%= check_box_tag("only", 'PASS', false)  %>Pass
+        <%= check_box_tag("only", 'FAIL', false)  %>Fail
+        <%= check_box_tag("only", 'NT', false)  %>Nt  <br/>
+
+
+      </div>
+      <br/>
+      <%= submit_tag "Query" %>
+    <% end %>
+
+  </div>
+<%end%>
+
+<br>
+
+
+<% unless params[:result].blank?  %>
+
+  <div>
+    <h4>
+      Query condition
+    </h4>
+    <ul>
+      <li>build No is "<%= params[:result][:buildno]  %>"      </li>
+      <li>Module is "<%= params[:result][:module]  %>"      </li>
+    </ul>
+
+  </div>
+<% end %>
+
+
+<% if not @query_result.nil? and @query_result.length > 0 %>
+  <div id="query_result_stat">
+    <h4>
+      Query Statics
+    </h4>
+
+    <table class="highlightable">
+      <tr>
+        <th>Total</th>
+        <th>PASS</th>
+        <th>Fail</th>
+        <th>NT</th>
+      </tr>
+      <%#*<tr class="total">%>
+        <%#*<td><%= @query_result.collect{|x| x.defined_id}.uniq.length%> 
+        <%#*<td><%= @query_result.select{|x| x.result == 'PASS'}.collect {|x| x.defined_id}.uniq.length%> 
+        <%#*<td><%= @query_result.select{|x| x.result == 'FAIL'}.collect {|x| x.defined_id}.uniq.length%> 
+        <%#*<td><%= @query_result.select{|x| x.result == 'NT'}.collect {|x| x.defined_id}.uniq.length%>
+      <%#*</tr>%>
+      <tr class="total">
+        <td> <%= @final_result.length %> </td>
+        <td> <%= @final_result.select { |x| x[:result] == "PASS"}.length %> </td>
+        <td> <%= @final_result.select { |x| x[:result] == "FAIL"}.length %> </td>
+        <td> <%= @final_result.select { |x| x[:result] == "NT"}.length %> </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div id="query_result_details">
+    <h4>
+      Query Test Result
+    </h4>
+
+    <table  class="highlightable sortable" >
+      <tr class="total">
+        <th>Defined_ID</th>
+        <th class="number">Duration(m)</th>
+        <th>Build_No</th>
+        <th>Result(History)</th>
+        <%#*<th>Run_History</th>%>
+        <th>Last_Run_at</th>
+        <th>Action</th>
+      </tr>
+      <%= render :partial => 'result_item', :collection =>@final_result%>
+
+    </table>
+
+
+  </div>
+
+<% else %>
+  <% unless  params[:buildno].nil? %>
+    <div id="query_hint">
+      Oops, no matching result found...
+    </div>
+  <% end %>
+<%end  %>
+
+

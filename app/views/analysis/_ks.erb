@@ -1,0 +1,7 @@
+<tr class="<%= cycle('rowA', 'rowB')%>">
+  <td><%= "%.2f" % ks[:total_duration] %> </td>  
+  <td><%= ks[:ref_count]%> </td>
+  <td><%= seconds_to_minutes(ks[:average])%> </td>
+  <td><%= ks[:kmodule]%> </td>
+  <td><%= ks[:keyword]%> </td>
+</tr>

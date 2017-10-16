@@ -1,0 +1,485 @@
+/*
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+
+/* Basic */
+
+*
+{
+    margin: 0em;
+    padding: 0em;
+}
+
+h1,h2,h3,h4,h5,h6
+{
+    color: #6a6a6a;
+}
+
+body
+{
+    /* font-family:palatino,serif, "Trebuchet MS", sans-serif; */
+    font-family:Verdana,Arial,Helvetica,sans-serif;
+    color: #7a7a7a;
+    font-size: 11pt;
+}
+
+a
+{
+    color: #AF0A0A;
+    text-decoration: underline;
+}
+
+a.image_link
+{
+    color:white;
+    text-decoration: none;
+}
+
+a:hover
+{
+    text-decoration: none;
+}
+
+input[type="text"], input[type="file"], input[type="password"], textarea, select {
+    background-color:#FFFFFF;
+    border:1px solid #9DB4BD;
+    padding:0px;
+
+}
+
+input[type="text"]:focus, input.focus[type="text"], input[type="password"]:focus, input.focus[type="password"], select:focus, select.focus, textarea:focus, textarea.focus {
+    background-color:#F6FCFE;
+    border:1px solid #9DB4BD;
+}
+
+#content div.comments {
+    border:1px solid #9DB4BD;
+}
+
+#content p.comments {
+
+    border:1px solid #9DB4BD;
+}
+
+/* Outer */
+#outer {
+    background:#FFFFFF none repeat scroll 0 0;
+    margin:0 auto;
+    /* padding:16px; */
+    width:936px;
+}
+
+/* Header */
+#myheader {
+    background:#333333 none repeat scroll 0 0;
+    height:30px;
+}
+
+#myheader-c {
+    background:#333333 no-repeat scroll 0 0;
+    height:30px;
+    margin:0 auto;
+    width:972px;
+}
+
+#myheader p {
+    border:0 none;
+    display:inline;
+    height:30px;
+    line-height:30px;
+    margin:0;
+    padding:0;
+}
+#myheader p.right {
+    float:right;
+    text-align:right;
+    width:500px;
+}
+
+#myheader p.left {
+    float:left;    
+    /* width:110px; */
+}
+
+
+#myheader p.right a:link, #myheader p.right a:visited {
+    border-bottom:1px solid #333333;
+    color:#999999;
+    font-size:13px;
+    font-weight:normal;
+    margin-left:14px;
+    margin-right:10px;
+    text-decoration:none;
+}
+#myheader p.right a:hover {
+    color:black;
+}
+
+
+
+#header
+{
+    padding: 0em 1.5em 0em 1.5em;
+    height: 8em;
+    width: 15em;
+    float: left;
+    position: relative;
+    background-color:  #FFFFFF;
+}
+
+#header h1
+{
+    position: absolute;
+    bottom: 2.2em;
+    font-size: 1.5em;
+    letter-spacing: 0.1em;
+}
+
+#header h1 a
+{
+    color: #708090;
+    text-decoration: none;
+}
+
+#header h2
+{
+    position: absolute;
+    bottom: 2.7em;
+    color: #EFE0E0;
+    font-size: 0.8em;
+}
+
+/* Menu */
+
+#menu
+{
+    height: 5em;
+    background: #FFFFFF top left repeat-x;
+    margin-left: 8em;
+    position: relative;
+}
+
+#login-nav
+{
+    float:right;
+    height: 1.5em;
+    position:absolute;
+    top:0.1em;
+}
+
+#menu ul
+{
+    list-style: none;
+    position: absolute;
+    top: 3.3em;
+    margin-left: 1.5em;
+}
+
+#menu li
+{
+    display: inline;
+    border-left: dotted 1px #848484;
+    padding-left: 0.8em;
+}
+
+#menu li.first
+{
+    border-left: 0px;
+    padding-left: 0em;
+}
+
+#menu li a
+{
+    text-decoration: none;
+    color: #6a6a6a;
+    font-weight: bold;
+    padding: 0.8em;
+    margin-right: 0.8em;
+    font-size: 0.9em;
+
+}
+
+#menu li a:hover
+{
+    color: #AF0A0A;
+}
+
+#menu li a:active
+{ 
+    background-color:#DDDDDD;
+}
+
+
+/* for drop-down style menu */
+
+
+
+/* #middlebar{
+font-size:11px;
+color:#3b5d14;
+background:#90b557;
+font-weight:bold;
+padding:4px;
+height:30px;
+
+} */
+
+
+#sddm
+{	margin: 0;
+    padding: 0;
+    z-index: 30}
+
+#sddm li
+{	margin: 0;
+    padding: 0;
+    list-style: none;
+    float: left;
+    font: bold 13px }
+
+#sddm li a
+{	display: block;
+    margin: 0 1px 0 0;
+    padding: 4px 10px;
+    width: 80px;
+    /*background: #FFF;*/
+    background: #67A7E3;
+    /*color: #696969;*/
+    color:#FFF;
+    text-align: center;
+    text-decoration: none}
+
+#sddm li a:hover
+{	background: #49A3FF}
+
+#sddm div
+{	position: absolute;
+    visibility: hidden;
+    margin: 0;
+    padding: 0;
+    background: white;
+    border: 1px solid #5970B2}
+
+#sddm div a
+{	position: relative;
+    display: block;
+    margin: 0;
+    padding: 5px 10px;
+    width: auto;
+    white-space: nowrap;
+    text-align: left;
+    text-decoration: none;
+    background: white;
+    color: #2875DE;
+    font: 11px arial}
+
+#sddm div a:hover
+{	background: #49A3FF;
+    color: #FFF}
+
+
+/* Content */
+
+
+
+#content
+{
+    background: #ffffff  top left repeat-x;
+    margin-top: 1px;
+    padding-top: 1.5em;
+}
+
+#content p
+{
+    margin-bottom: 1.5em;
+    line-height: 1.6em;
+}
+
+#content h2
+{
+    font-size: 1.5em;
+}
+
+#content h3
+{
+    font-size: 1.1em;
+}
+
+#content h2,h3,h4,h5,h6
+{
+    padding-bottom: 0.2em;
+    margin-bottom: 1.2em;
+    border-bottom: dotted 1px #cacaca;
+}
+
+#content ul
+{
+    margin-bottom: 1.5em;
+    padding-left: 1em;
+    line-height: 1.6em;
+}
+
+#content blockquote
+{
+    border-left: solid 0.8em #cacaca;
+    padding: 0.5em 0em 0.5em 1.0em;
+    margin-bottom: 1.5em;
+    line-height: 1.6em;
+}
+
+#content blockquote p
+{
+    display: inline;
+}
+
+
+.sortcol {
+    background-position:right center;
+    background-repeat:no-repeat;
+    cursor:pointer;
+    padding-right:20px;
+}
+
+.sortasc {
+    background-color:#DDFFAC;
+    background-image:url(up.gif);
+}
+
+.sortdesc {
+    background-color:#B9DDFF;
+    background-image:url(down.gif);
+}
+
+
+
+tr.rowodd {
+
+}
+
+tr.roweven {
+    background-color: #F2F2F2;
+}
+
+
+
+table.highlightable td.highlight { background: red; }
+
+
+/* Primary Content */
+
+#primaryContentContainer
+{
+    float: right;
+    margin-left: -19em;
+    width: 100%;
+}
+
+#primaryContent
+{
+    margin: 0em 0em 0em 18em;
+    padding: 1.5em;
+    border-left: dotted 1px #cacaca;
+}
+
+
+#primaryContent ul.subsection_tabs {
+    border-bottom:1px solid #CCCCCC;
+    clear:both;
+    height:20px;
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+    margin:0 0 5px;
+    padding:0;
+
+}
+
+
+#primaryContent ul.subsection_tabs li.tab {
+    float:left;
+    margin-right:7px;
+    text-align:center;
+}
+
+#primaryContent ul.subsection_tabs li.tab a {
+    background-color:#FFFFFF;
+    color:#666666;
+    display:block;
+    height:20px;
+    padding:0 6px;
+    /* width:200px; */
+    width:auto;
+    font-size:10pt;
+    text-decoration:none;
+}
+
+#primaryContent ul.subsection_tabs li.tab a:hover {
+    color:#666666;
+    background-color:#AAAAAA
+}
+
+#primaryContent ul.subsection_tabs li.tab a.active {
+    background-color:#EEDDDD;
+}
+
+#primaryContent ul.subsection_tabs li.source_code {
+    float:right;
+}
+
+/* Secondary Content */
+
+#secondaryContent
+{
+    float: left;
+    width: 15em;
+    padding: 1.5em;
+}
+
+/* Footer */
+
+#footer
+{
+    margin-top: 1.0em;
+    border-top: dotted 1px #cacaca;
+    padding: 1.5em;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.error
+{
+    background-color: #FFB6C1;
+}
+
+/* autocomplet */
+div.auto_complete {
+    width: 300px;
+    background: #fff;
+    font-size: 0.9em;
+}
+div.auto_complete ul {
+    border:1px solid #888;
+    margin:0;
+    padding:0;
+    width:100%;
+    list-style-type:none;
+}
+div.auto_complete ul li {
+    margin:0;
+    padding:1px;
+}
+div.auto_complete ul li.selected {
+    background-color: #ffb;
+}
+div.auto_complete ul strong.highlight {
+    color: #800;
+    margin:0;
+    padding:0;
+}

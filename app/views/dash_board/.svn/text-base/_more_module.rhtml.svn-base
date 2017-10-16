@@ -1,0 +1,13 @@
+<h5>
+  IMSx7.1 Module List
+</h5>
+<table>
+
+  <%  @modules.in_groups_of(10).each do |group| %>
+    <tr>
+      <% group.select{|m| not m.nil?}.each do |mod| %>
+        <td><%=link_to "#{mod}", module_status_url(:module=>"#{mod}")%></td>
+      <%end%>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,16 @@
+
+
+<h5>
+  IMSx7.1 False Alert Test Case List (Total: <%= "#{@pfcs.length}" %>)
+</h5>
+<table>
+  <%  @pfcs.in_groups_of(3).each do |group| %>
+    <tr class="<%=cycle('rowA', 'rowB')%>" >
+      <% group.each do |p| %>
+        <% unless p.nil? %>
+          <td><%=link_to "#{p.defined_id}", :controller => :pfc, :action=>:query, :defined_id=>p.defined_id, :buildno =>p.buildno %></td>
+        _pfc_it<%end%>
+      <%end%>
+    </tr>
+  <% end %>
+</table>

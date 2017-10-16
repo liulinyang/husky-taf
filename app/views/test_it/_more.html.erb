@@ -1,0 +1,14 @@
+<h5>
+  History Result
+</h5>
+<table>
+			
+
+  <%  @final_history.in_groups_of(10).each do |group| %>
+    <tr>
+      <% group.select{|h| not h.nil? }.each do |h| %>
+        <td><%=link_to "#{h[:buildno]}(#{h[:result]})", :controller=>'test_it', :action=>:testcase, :id=>h[:history][-1]%></td>
+      <%end%>
+    </tr>
+  <% end %>
+</table>

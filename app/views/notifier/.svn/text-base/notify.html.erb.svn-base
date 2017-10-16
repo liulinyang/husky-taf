@@ -1,0 +1,5 @@
+<%= @message %>
+
+<%= url_for(:host => "nj-incase:4000", :controller => "dash_board", :action => "index") %>
+
+Thanks

@@ -1,0 +1,26 @@
+<h4>
+  Keywords Usage Stat. 
+</h4>
+
+
+
+<div id="keyword_usage_stat">
+  <table class="highlightable sortable">
+    <tr class="header" id="pfc_list_header">
+      <th>Total_dur(h)</th>
+      <th>Ref_count</th>
+      <th>Avg(s)</th>
+      <th>Kmodule</th>
+      <th>keyword</th>
+    </tr>
+
+    <%#= render :partial => "usage_item", :collection => @usage %>
+
+    <% for ks in @keyword_stat %>
+      <%= render :partial => "ks", :locals => { :ks => ks } %>
+    <% end %>
+  </table>
+</div>
+
+
+

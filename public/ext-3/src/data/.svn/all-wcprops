@@ -1,0 +1,149 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/2/trunk/public/ext-3/src/data
+END
+JsonWriter.js
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/JsonWriter.js
+END
+DataWriter.js
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/DataWriter.js
+END
+GroupingStore.js
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/GroupingStore.js
+END
+Api.js
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/Api.js
+END
+MemoryProxy.js
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/MemoryProxy.js
+END
+DataProxy.js
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/DataProxy.js
+END
+SortTypes.js
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/SortTypes.js
+END
+DirectProxy.js
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/DirectProxy.js
+END
+XmlStore.js
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/XmlStore.js
+END
+DataField.js
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/DataField.js
+END
+Record.js
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/Record.js
+END
+HttpProxy.js
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/HttpProxy.js
+END
+XmlReader.js
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/XmlReader.js
+END
+JsonStore.js
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/JsonStore.js
+END
+DirectStore.js
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/DirectStore.js
+END
+ArrayStore.js
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/ArrayStore.js
+END
+Store.js
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/Store.js
+END
+DataReader.js
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/DataReader.js
+END
+JsonReader.js
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/JsonReader.js
+END
+XmlWriter.js
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/XmlWriter.js
+END
+Tree.js
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/Tree.js
+END
+ArrayReader.js
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/ArrayReader.js
+END
+ScriptTagProxy.js
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/ScriptTagProxy.js
+END
+StoreMgr.js
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/2/trunk/public/ext-3/src/data/StoreMgr.js
+END

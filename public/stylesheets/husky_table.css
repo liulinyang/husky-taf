@@ -1,0 +1,49 @@
+
+#content table
+{
+    border: dotted 1px #cacaca;
+    padding: 0.5em;
+    margin-bottom: 1.5em;
+}
+
+#content table tr.failed_step
+{
+    background-color: #FAEBD7
+}
+
+#content table th
+{
+    text-align: left;
+    font-weight: bold;
+    padding:0.5em 1.5em 0.5em 0.3em;
+    /* padding: 1em; */
+}
+
+#content table td
+{
+    padding: 0.5em;
+}
+
+#content table tr.header
+{
+    background-color: #e1e1ff;
+    color: inherit;
+}
+
+#content table tr.rowA
+{
+    background-color: #f5f5f5;
+    color: inherit;
+}
+
+#content table tr.rowB
+{
+    background-color: #fdfdfd;
+    color: inherit;
+}
+
+#content table tr.total
+{
+    background-color: #e1e1ff;
+    color: inherit;
+}

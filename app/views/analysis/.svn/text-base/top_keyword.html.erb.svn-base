@@ -1,0 +1,15 @@
+<div id="top_list">
+    <table class="highlightable sortable">
+      <tr class="header" id="top_list_header">        
+        <th>Kmodule</th>
+        <th>keyword</th>
+        <th>Dur(s)</th>
+      </tr>
+      
+      
+      <%= render :partial => "top_item", :collection => @tops%>
+
+
+
+    </table>
+  </div>

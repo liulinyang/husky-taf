@@ -1,0 +1,27 @@
+<tr>
+  <td>
+    <%= link_to "#{submission_item.result_file_name}" , :action=>"show", :id=>submission_item%>
+  </td>
+  <td>
+    <%= submission_item.buildno%>
+  </td>
+  <td>
+    <%= submission_item.comments%>
+  </td>
+  <td>
+    <%= submission_item.owner%>
+  </td>
+  <td>
+    <%= submission_item.created_at.ctime %>
+  </td>
+  <td>
+    <% if submission_item.loaded == 0 %>
+      <%= link_to "load" , :action=>:load_result, :id=>submission_item%>
+    <%  else %>
+      loaded
+    <% end %>
+
+  </td>
+
+</tr>
+

@@ -1,0 +1,69 @@
+
+<% if flash[:notice] -%>
+  <div id="notice" style="color:green"><%= flash[:notice] %></div>
+<% end -%>
+
+<div id="overall_notice">
+
+</div>
+
+<div>
+  <h5>
+    Please add test result file.
+  </h5>
+
+
+  <div>
+    <% remote_form_for(@submission,
+      :url => {:action => 'save'},
+      :html => { :multipart => true }) do |form| %>
+      <%= form.error_messages %>
+      <p>
+        Upload your test result file:        <%= form.file_field("result_field" ) %>
+      </p>
+      <p>
+        Build No<br/>
+        <%= form.text_field("buildno" ) %>
+      </p>
+      <p>
+        Comment<br/>
+        <%= form.text_field("comments" ) %>
+      </p>
+      
+      <%= submit_tag("Add" ) %>
+    <% end %>
+  </div>
+
+</div>
+
+<br>
+
+
+<div>
+  <h5>
+    Test Result Submission History
+  </h5>
+
+
+
+  <table>
+    <tr>
+      <th>Result_file</th>
+      <th>Build_No</th>
+      <th>Comments</th>
+      <th>Owner</th>
+      <th>Created_at</th>
+      <th>Load_status</th>
+    </tr>
+    <%= render :partial => "submission_item" , :collection=> @submissions%>
+
+  </table>
+  <div class="digg_pagination">
+    <div clas="page_info">
+      <%= page_entries_info @submissions  %>
+    </div>
+    <%= will_paginate @submissions , :container => false %>
+  </div>
+  
+
+</div>

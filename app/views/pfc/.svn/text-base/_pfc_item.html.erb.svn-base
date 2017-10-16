@@ -1,0 +1,50 @@
+<% old_pfc = @pfc %>
+<% @pfc = pfc_item %>
+
+<tr id="<%= dom_id pfc_item.result %>" class="<%= cycle('rowA', 'rowB')%>">
+  <td>
+    <%= link_to "#{pfc_item.result.defined_id}", :action=>"handle", :id=>pfc_item.result %>
+    <%#= "#{pfc_item.result.defined_id}" %>
+  </td>
+  <td>
+    <%= "#{pfc_item.result.testbuild.buildno}" %>
+  </td>
+  <td>
+    <%#= "#{pfc_item.comments}" %>
+    <%= in_place_select_editor_field(
+      :pfc,
+      'status',
+      {},
+      :select_options => '<option>manually_pass</option><option>manually_fail</option><option>in_progress</option>') %>
+  </td>
+  <td>
+    <%#= "#{pfc_item.comments}" %>
+    <%= in_place_select_editor_field(
+      :pfc,
+      'reason',
+      {},
+      :select_options =>
+        '<option>taf_bug</option><option>product_bug</option><option>testdata_issue</option>') %>
+  </td>
+  <td>
+    <%= in_place_editor_field :pfc, 'tracker'%>
+  </td>
+  <td>
+    <%= "#{pfc_item.owner}" %>
+  </td>
+  <td>
+    <%= in_place_editor_field :pfc, 'comments', {}, :rows=>3 %>
+  </td>
+
+  <td>
+    <%#= image_tag 'icon_delete.gif', :alt => "Delete" %>
+    <%= link_to_remote image_tag('icon_delete.gif'),
+      :url => {:confirm => 'Are you sure?',:action=>'delete', :id => pfc_item},
+      :confirm => "Are you sure to delete this ever handled case?",
+      :before => "Element.show('spinner');",
+      :complete => "Element.hide('spinner');",
+      :html => {:class => "image_link"}%>
+  </td>
+
+</tr>
+

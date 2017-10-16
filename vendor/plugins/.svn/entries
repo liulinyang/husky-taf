@@ -1,0 +1,49 @@
+10
+
+dir
+2
+http://husky-taf.googlecode.com/svn/trunk/vendor/plugins
+http://husky-taf.googlecode.com/svn
+
+
+
+2010-12-30T09:59:23.755671Z
+2
+liulinyang
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+95160008-0ef9-6fd0-e8bc-efbf3f82e488
+
+acts_as_taggable_on_steroids
+dir
+
+master
+dir
+
+in_place_editing
+dir
+
+will_paginate
+dir
+
+acts_as_authenticated
+dir
+
+auto_complete
+dir
+
+open_flash_chart.git
+dir
+

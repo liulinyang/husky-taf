@@ -1,0 +1,13 @@
+<h5>
+  IMSVA 8.2 Build List
+</h5>
+<table>
+
+  <%  @build_list.in_groups_of(10).each do |group| %>
+    <tr>
+      <% group.select{|b| not b.nil? }.each do |b| %>
+        <td><%=link_to "#{b.buildno}",build_status_url(:build_id=>b)%></td>
+      <%end%>
+    </tr>
+  <% end %>
+</table>

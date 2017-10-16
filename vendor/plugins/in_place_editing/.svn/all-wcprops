@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/vendor/plugins/in_place_editing
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/2/trunk/vendor/plugins/in_place_editing/README
+END
+Rakefile
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/2/trunk/vendor/plugins/in_place_editing/Rakefile
+END
+init.rb
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2/trunk/vendor/plugins/in_place_editing/init.rb
+END

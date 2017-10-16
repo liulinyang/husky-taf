@@ -1,0 +1,5 @@
+<tr class="<%= cycle('rowA', 'rowB')%>">
+  <td><%= change_item[:defined_id]%> </td>
+  <td><%= change_item[:build_list]%> </td>
+  <td><%= change_item[:result_list]%> </td>
+</tr>
